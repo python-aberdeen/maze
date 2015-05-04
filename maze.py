@@ -120,7 +120,9 @@ class Wall:
         return NotImplemented
 
     def __ne__(self, other):
-        """Define a non-equality test"""
+        """
+        Define a non-equality test
+        """
         if isinstance(other, self.__class__):
             return not self.__eq__(other)
         return NotImplemented
@@ -133,8 +135,11 @@ class Wall:
 
 class Matrix:
     """
-    Implementation of the matrix class.
+    Implementation of the matrix class. The class populates its member cells
+    and runs the backtracker.
     """
+
+    # ToDo: Attack reduncies
 
     def __init__(self, size):
         self.size = size
@@ -142,22 +147,36 @@ class Matrix:
 
     @property
     def matrix(self):
+        """
+        Return the member cells in their positions.
+        """
+        # ToDo: Refactor Candidate
         return [
             [Cell((row, col), self) for col in range(self.size[1])]
             for row in range(self.size[0])
         ]
 
     def populate_cells(self):
+        """
+        Populate the cells in the matrix the cells attribute is a list of
+        dictionaries which has tuples as keys and a set of tuples representing position
+        as values
+        """
+
         for row in self.matrix:
             for cell in row:
                 self.cells.update({cell.pos: cell})
 
     def get_cell(self, pos):
+        "Return a cell given the position of the cell"
+
         if not self.cells:
             self.populate_cells()
         return self.cells[pos]
 
     def make_walls(self):
+        "Create all walls"
+    
         for row in self.matrix:
             for cell in row:
                 cell.cell_walls()
