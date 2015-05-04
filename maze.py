@@ -176,7 +176,7 @@ class Matrix:
 
     def make_walls(self):
         "Create all walls"
-    
+
         for row in self.matrix:
             for cell in row:
                 cell.cell_walls()
@@ -184,14 +184,20 @@ class Matrix:
 
     def get_wall(self, duo):
         """
-        Gets the wall between two cells. 
-        Position of cells are passed as a set of tuples"""
+        Gets the wall between two cells.
+        Position of cells are passed as a set of tuples
+        """
+
         cell = self.get_cell((0, 0))
         walls = cell.walls
         wall = [wall for wall in walls if wall.cells == duo]
         return wall[0] if wall else None
 
     def unvisited_exist(self):
+        "Check if there are unvisited cells and return it"
+    
+        # ToDo: Candidate for refactor. 
+        # Only left in because its presence gives me a sense of robustness
         for dummy, cell in self.cells.items():
             if not cell.visited:
                 return cell
@@ -227,3 +233,7 @@ class Matrix:
             else:
                 cell_rep = random.choice(unvisited)
                 _, current_cell = cell_rep.items()
+
+#    def __str__(self):
+#        """Draw the class"""
+#        pass
