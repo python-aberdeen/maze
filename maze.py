@@ -1,3 +1,6 @@
+"""
+Maze Generator using Recursive Backtracker
+"""
 import random
 import sys 
 
@@ -30,7 +33,8 @@ class Cell:
 
     @staticmethod
     def in_boundary(pos, size):
-        "Check that pos is within matrix given size"
+        "Check that pos is within matrix given matrix size"
+
         rows, cols = size
         return (
             pos[0] < rows
@@ -41,12 +45,14 @@ class Cell:
 
     def append_wall(self, neighbour):
         "Create wall between neighbour if wall does not exist"
+    
         wall = Wall(closed=True, cells={self.pos, neighbour.pos})
         if not wall in self.walls:
             self.walls.append(wall)
 
     def cell_walls(self):
         "Create cell's walls"
+
         for neigh in self.neighbours:
             self.append_wall(neigh)
 
@@ -64,8 +70,10 @@ class Cell:
         return neighbours
 
     def __eq__(self, other):
-        """Override the default equals behavior
-         to allow comparisons within a matrix or elsewhere"""
+        """
+        Override the default equals behavior
+        to allow comparisons within a matrix or elsewhere
+        """
         if isinstance(other, self.__class__):
             return self.__dict__ == other.__dict__
         return NotImplemented
@@ -79,9 +87,11 @@ class Cell:
         return NotImplemented
 
     def __hash__(self):
-        """Override the default hash behavior
+        """
+        Override the default hash behavior
         (that returns the id or the object). This allows set
-        operations"""
+        operations
+        """
         return hash(tuple(sorted(self.__dict__.items())))
 
     def __str__(self):
@@ -101,8 +111,10 @@ class Wall:
         self.cells = cells
 
     def __eq__(self, other):
-        """Override the default Equals behavior by putting the cells of
-        the walls being compared in a set to make index agnostic"""
+        """
+        Override the default Equals behavior by putting the cells of
+        the walls being compared in a set to make the wall 'index agnostic'
+        """
         if isinstance(other, self.__class__):
             return set(self.cells) == set(other.cells)
         return NotImplemented
